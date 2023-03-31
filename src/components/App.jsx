@@ -12,18 +12,12 @@ const initalContacts = [
 ];
 
 export default function App() {
-  const [contacts, setContacts] = useState(initalContacts);
+  const [contacts, setContacts] = useState(JSON.parse(window.localStorage.getItem('contacts')) ?? initalContacts);
   const [filter, setFilter] = useState('');
 
   useEffect(()=>{
-    //* витягнути з LocalStorage
-    const parseContacts = JSON.parse(localStorage.getItem('contacts'));
-    setContacts(parseContacts);
-  }, []);
-
-  useEffect(()=>{
     //* зберегти в LocalStorage
-    window.localStorage.setItem('contacts', JSON.stringify(contacts))
+    return window.localStorage.setItem('contacts', JSON.stringify(contacts))
   }, [contacts])
   
   const handleSubmitForm = ( data ) => {
@@ -40,7 +34,7 @@ export default function App() {
   }
   
   const handleChangeFilter = ({target}) => {    
-    setFilter({ filter: target.value })
+    setFilter( target.value )
   }
 
   const deleteContact = (id) => {
